@@ -1,70 +1,206 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <link
-      rel="stylesheet"
-      href="./materialize.css"
-    />
-    <script src="./materialize.js"></script>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        padding: 10%;
-        text-align: center;
-      }
-      h1 {
-        font-size: 24px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-      }
-      .row{
-        margin: 0;
-      }
-      table {
-        margin-right: 10px;
-      }
-      tr {
-        border: none;
-      }
-      img {
-        width: 50px;
-        /* height: 10px; */
-      }
-    </style>
-  </head>
-  <body>
-    <div class="row">
-        <img src="icon.png"/>
-        <h1>Netflix Skipper</h1>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 260px;
+      background: #111;
+      color: #e8e8e8;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      padding: 20px;
+      user-select: none;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #222;
+    }
+
+    .header img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .header-text h1 {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #fff;
+    }
+
+    .header-text span {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #e50914;
+    }
+
+    /* ── Toggle rows ── */
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #1a1a1a;
+      border: 1px solid #272727;
+      border-radius: 10px;
+      padding: 12px 14px;
+      transition: border-color 0.2s;
+    }
+
+    .toggle-row:hover {
+      border-color: #333;
+    }
+
+    .toggle-label {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .toggle-label strong {
+      font-size: 13px;
+      font-weight: 600;
+      color: #f0f0f0;
+    }
+
+    .toggle-label small {
+      font-size: 10px;
+      color: #555;
+    }
+
+    /* ── Custom toggle switch ── */
+    .switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: #2a2a2a;
+      border-radius: 22px;
+      cursor: pointer;
+      transition: background 0.22s;
+      border: 1px solid #333;
+    }
+
+    .slider::before {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      left: 3px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #555;
+      border-radius: 50%;
+      transition: transform 0.22s, background 0.22s;
+    }
+
+    input:checked + .slider {
+      background: #e50914;
+      border-color: #e50914;
+    }
+
+    input:checked + .slider::before {
+      transform: translateX(18px) translateY(-50%);
+      background: #fff;
+    }
+
+    /* ── Footer status ── */
+    .footer {
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #e50914;
+      flex-shrink: 0;
+      box-shadow: 0 0 6px #e50914aa;
+    }
+
+    .footer span {
+      font-size: 10px;
+      color: #444;
+      letter-spacing: 0.03em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="icon.png" alt="Netflix Skipper icon" />
+    <div class="header-text">
+      <h1>Netflix Skipper</h1>
+      <span>Auto-skip controls</span>
     </div>
-    <table>
-        <tbody>
-            <tr>
-                <td><label for="skipIntro">Skip Intro</label></td>
-                <td>
-                    <div class="switch">
-                    <label>
-                        <input type="checkbox" id="skipIntro" checked />
-                        <span class="lever"></span>
-                    </label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td><label for="nextEpisode">Next Episode</label></td>
-                <td>
-                    <div class="switch">
-                    <label>
-                        <input type="checkbox" id="nextEpisode" checked />
-                        <span class="lever"></span>
-                    </label>
-                    </div>
-                </td>
-            </tr>
-            
-        </tbody>
-    </table>
-    
-    <script src="popup.js"></script>
-  </body>
+  </div>
+
+  <div class="controls">
+
+    <div class="toggle-row">
+      <div class="toggle-label">
+        <strong>Skip Intro</strong>
+        <small>Skips intros &amp; recaps</small>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="skipIntro" checked />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="toggle-row">
+      <div class="toggle-label">
+        <strong>Next Episode</strong>
+        <small>Auto-advances episodes</small>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="nextEpisode" checked />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="status-dot"></div>
+    <span>Active on netflix.com</span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
 </html>
